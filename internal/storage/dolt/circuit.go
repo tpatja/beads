@@ -125,9 +125,17 @@ func (cb *circuitBreaker) Allow() bool {
 }
 
 // probe performs a quick TCP dial to check if the Dolt server is reachable.
+// tpatja fork: honour BEADS_DOLT_SERVER_HOST so remote-Dolt setups over
+// Tailscale can reset the breaker. Upstream hardcoded 127.0.0.1; a remote
+// Dolt deployment never has anything listening there and the breaker
+// remains open indefinitely once tripped.
 func (cb *circuitBreaker) probe() bool {
-	addr := fmt.Sprintf("127.0.0.1:%d", cb.port)
-	conn, err := net.DialTimeout("tcp", addr, 1*time.Second)
+	host := os.Getenv("BEADS_DOLT_SERVER_HOST")
+	if host == "" {
+		host = "127.0.0.1"
+	}
+	addr := fmt.Sprintf("%s:%d", host, cb.port)
+	conn, err := net.DialTimeout("tcp", addr, 3*time.Second)
 	if err != nil {
 		return false
 	}
