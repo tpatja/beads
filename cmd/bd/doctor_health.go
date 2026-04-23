@@ -52,7 +52,7 @@ func runCheckHealth(path string) {
 
 	var issues []string
 
-	dsn := fmt.Sprintf("%s@tcp(%s:%d)/%s?timeout=2s",
+	dsn := fmt.Sprintf("%s@tcp(%s:%d)/%s?timeout=30s",
 		cfg.GetDoltServerUser(), host, port, database)
 	db, err := sql.Open("mysql", dsn)
 	if err == nil {

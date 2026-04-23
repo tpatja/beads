@@ -114,10 +114,10 @@ func runDoltServerDiagnostics(metrics *DoltPerfMetrics, host string, port int, d
 
 	var dsn string
 	if password != "" {
-		dsn = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true&timeout=5s",
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true&timeout=30s",
 			user, password, host, port, dbName)
 	} else {
-		dsn = fmt.Sprintf("%s@tcp(%s:%d)/%s?parseTime=true&timeout=5s",
+		dsn = fmt.Sprintf("%s@tcp(%s:%d)/%s?parseTime=true&timeout=30s",
 			user, host, port, dbName)
 	}
 

@@ -29,7 +29,7 @@ func checkFreshCloneDB(host string, port int, user, password, dbName string) fre
 	} else {
 		userPart = user
 	}
-	dsn := fmt.Sprintf("%s@tcp(%s:%d)/?timeout=5s", userPart, host, port)
+	dsn := fmt.Sprintf("%s@tcp(%s:%d)/?timeout=30s", userPart, host, port)
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
